@@ -16,6 +16,7 @@ export default function NoteEditor({ note, onSave, onCancel, onDelete }: Props) 
   const [location, setLocation] = useState<GeoPoint | undefined>(note?.location);
   const [locating, setLocating] = useState(false);
   const [geoError, setGeoError] = useState<string>();
+  const [confirmingDelete, setConfirmingDelete] = useState(false);
 
   function captureLocation() {
     if (!("geolocation" in navigator)) {
@@ -30,7 +31,7 @@ export default function NoteEditor({ note, onSave, onCancel, onDelete }: Props) 
         setLocating(false);
       },
       (err) => {
-        setGeoError(err.message);
+        setGeoError(err.code === err.PERMISSION_DENIED ? "Location access was refused. Allow it in your browser settings to tag notes." : err.message);
         setLocating(false);
       },
       { enableHighAccuracy: true, timeout: 15000 },
@@ -64,11 +65,18 @@ export default function NoteEditor({ note, onSave, onCancel, onDelete }: Props) 
       </div>
 
       <div className="actions">
-        {onDelete && (
-          <button type="button" className="danger" onClick={() => confirm("Delete this note?") && onDelete()}>
-            Delete
-          </button>
-        )}
+        {onDelete &&
+          (confirmingDelete ? (
+            <>
+              <span>Delete this note?</span>
+              <button type="button" className="danger" onClick={onDelete}>Delete</button>
+              <button type="button" onClick={() => setConfirmingDelete(false)}>Keep</button>
+            </>
+          ) : (
+            <button type="button" className="danger" onClick={() => setConfirmingDelete(true)}>
+              Delete
+            </button>
+          ))}
         <span className="spacer" />
         <button type="button" onClick={onCancel}>Cancel</button>
         <button type="submit" className="primary">Save</button>

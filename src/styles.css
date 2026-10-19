@@ -7,12 +7,11 @@
   --accent: #2f5d3a;
   --accent-text: #ffffff;
   --danger: #a23b2a;
-  color-scheme: light dark;
   font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --bg: #161a17;
     --surface: #20261f;
     --text: #e6e9e2;
@@ -21,13 +20,30 @@
     --accent: #7fb38a;
     --accent-text: #10170f;
     --danger: #e0806f;
+    color-scheme: dark;
   }
+}
+
+:root[data-theme="dark"] {
+  --bg: #161a17;
+  --surface: #20261f;
+  --text: #e6e9e2;
+  --muted: #9aa392;
+  --border: #343c33;
+  --accent: #7fb38a;
+  --accent-text: #10170f;
+  --danger: #e0806f;
+  color-scheme: dark;
 }
 
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--bg); color: var(--text); }
 
-.app { max-width: 720px; margin: 0 auto; padding: 0 16px 32px; }
+.app {
+  max-width: 720px; margin: 0 auto; padding-block: 0 32px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
 .topbar { display: flex; align-items: center; gap: 12px; padding: 16px 0; }
 .topbar h1 { font-size: 1.4rem; margin: 0; }
 .badge { font-size: 0.75rem; padding: 2px 8px; border-radius: 999px; background: var(--muted); color: var(--bg); }
@@ -65,5 +81,8 @@ button:disabled { opacity: 0.6; cursor: default; }
 .location { display: flex; flex-direction: column; gap: 6px; font-size: 0.9rem; }
 .location > button { justify-self: start; align-self: flex-start; }
 .error { color: var(--danger); }
+.banner { margin: 0 0 16px; padding: 10px 12px; border: 1px solid var(--danger); border-radius: 8px; }
+button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.actions { flex-wrap: wrap; }
 .actions { display: flex; gap: 8px; align-items: center; }
 .spacer { flex: 1; }

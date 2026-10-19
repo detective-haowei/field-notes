@@ -4,7 +4,8 @@ import { registerSW } from "virtual:pwa-register";
 import App from "./App";
 import "./styles.css";
 
-registerSW({ immediate: true });
+// Some hosts (sandboxed frames) refuse service workers; the app still works online.
+registerSW({ immediate: true, onRegisterError() {} });
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

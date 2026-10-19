@@ -10,9 +10,17 @@ export default function App() {
   const [notes, setNotes] = useState<Note[]>([]);
   const [query, setQuery] = useState("");
   const [view, setView] = useState<View>({ kind: "list" });
+  const [error, setError] = useState<string>();
   const online = useOnline();
 
-  const refresh = useCallback(async () => setNotes(await listNotes()), []);
+  const refresh = useCallback(async () => {
+    try {
+      setNotes(await listNotes());
+      setError(undefined);
+    } catch {
+      setError("This browser is blocking local storage, so notes can't be saved here. Try a regular (non-private) window.");
+    }
+  }, []);
   useEffect(() => {
     refresh();
   }, [refresh]);
@@ -20,8 +28,13 @@ export default function App() {
   const visible = useMemo(() => notes.filter((n) => matchesQuery(n, query)), [notes, query]);
 
   async function save(draft: NoteDraft) {
-    if (view.kind === "edit" && view.note) await updateNote(view.note.id, draft);
-    else await createNote(draft);
+    try {
+      if (view.kind === "edit" && view.note) await updateNote(view.note.id, draft);
+      else await createNote(draft);
+    } catch {
+      setError("Couldn't save the note. Local storage is unavailable in this browser.");
+      return;
+    }
     await refresh();
     setView({ kind: "list" });
   }
@@ -39,6 +52,7 @@ export default function App() {
         {!online && <span className="badge">Offline</span>}
       </header>
       <main>
+        {error && <p className="error banner">{error}</p>}
         {view.kind === "list" ? (
           <>
             <div className="toolbar">
