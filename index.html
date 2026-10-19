@@ -486,6 +486,15 @@ header{flex-wrap:nowrap}
 .sbox:focus-within,.sbox.hv{flex-basis:max(190px,min(420px,42vw))}
 @media (max-width:760px){.srch{order:0;flex:0 1 auto;max-width:none;margin:0 0 0 4px}}
 h1{white-space:nowrap}
+.authb{position:fixed;inset:0;z-index:200;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:16px}
+.authb[hidden]{display:none}
+.authc{width:min(380px,100%);background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:8px}
+.authc h2{margin:0}
+.authc label{font-size:12px;font-weight:600;color:var(--mute);margin-top:8px}
+.authc input{width:100%;height:36px}
+.aumsg{min-height:20px;font-size:13px;color:var(--mute)}
+.aumsg.err{color:var(--danger)}
+.acct{padding:8px 10px;font-size:12px;color:var(--mute);overflow-wrap:anywhere;max-width:220px}
 </style>
 </head>
 <body>
@@ -493,7 +502,7 @@ h1{white-space:nowrap}
   <header>
     <h1><span class="lg"><svg width="30" height="30" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true" style="overflow:visible"><circle cx="0.50" cy="0.50" r="0.12"/><circle cx="1.50" cy="0.50" r="0.12"/><circle cx="2.50" cy="0.50" r="0.12"/><circle cx="3.50" cy="0.50" r="0.12"/><circle cx="4.50" cy="0.50" r="0.12"/><circle cx="5.50" cy="0.50" r="0.12"/><circle cx="6.50" cy="0.50" r="0.12"/><circle cx="7.50" cy="0.50" r="0.12"/><circle cx="8.50" cy="0.50" r="0.12"/><circle cx="9.50" cy="0.50" r="0.12"/><circle cx="10.50" cy="0.50" r="0.12"/><circle cx="11.50" cy="0.50" r="0.12"/><circle cx="12.50" cy="0.50" r="0.12"/><circle cx="13.50" cy="0.50" r="0.12"/><circle cx="0.50" cy="1.50" r="0.12"/><circle cx="1.50" cy="1.50" r="0.67"/><circle cx="2.50" cy="1.50" r="0.59"/><circle cx="3.50" cy="1.50" r="0.12"/><circle cx="4.50" cy="1.50" r="0.12"/><circle cx="5.50" cy="1.50" r="0.12"/><circle cx="6.50" cy="1.50" r="0.12"/><circle cx="7.50" cy="1.50" r="0.12"/><circle cx="8.50" cy="1.50" r="0.12"/><circle cx="9.50" cy="1.50" r="0.12"/><circle cx="10.50" cy="1.50" r="0.12"/><circle cx="11.50" cy="1.50" r="0.12"/><circle cx="12.50" cy="1.50" r="0.12"/><circle cx="13.50" cy="1.50" r="0.12"/><circle cx="0.50" cy="2.50" r="0.12"/><circle cx="1.50" cy="2.50" r="0.27"/><circle cx="2.50" cy="2.50" r="0.32"/><circle cx="3.50" cy="2.50" r="0.12"/><circle cx="4.50" cy="2.50" r="0.12"/><circle cx="5.50" cy="2.50" r="0.12"/><circle cx="6.50" cy="2.50" r="0.12"/><circle cx="7.50" cy="2.50" r="0.12"/><circle cx="8.50" cy="2.50" r="0.12"/><circle cx="9.50" cy="2.50" r="0.12"/><circle cx="10.50" cy="2.50" r="0.12"/><circle cx="11.50" cy="2.50" r="0.12"/><circle cx="12.50" cy="2.50" r="0.12"/><circle cx="13.50" cy="2.50" r="0.12"/><circle cx="0.50" cy="3.50" r="0.12"/><circle cx="1.50" cy="3.50" r="0.28"/><circle cx="2.50" cy="3.50" r="0.13"/><circle cx="3.50" cy="3.50" r="0.12"/><circle cx="4.50" cy="3.50" r="0.12"/><circle cx="5.50" cy="3.50" r="0.36"/><circle cx="6.50" cy="3.50" r="0.42"/><circle cx="7.50" cy="3.50" r="0.45"/><circle cx="8.50" cy="3.50" r="0.44"/><circle cx="9.50" cy="3.50" r="0.44"/><circle cx="10.50" cy="3.50" r="0.44"/><circle cx="11.50" cy="3.50" r="0.40"/><circle cx="12.50" cy="3.50" r="0.34"/><circle cx="13.50" cy="3.50" r="0.18"/><circle cx="0.50" cy="4.50" r="0.15"/><circle cx="1.50" cy="4.50" r="0.59"/><circle cx="2.50" cy="4.50" r="0.57"/><circle cx="3.50" cy="4.50" r="0.12"/><circle cx="4.50" cy="4.50" r="0.12"/><circle cx="5.50" cy="4.50" r="0.12"/><circle cx="6.50" cy="4.50" r="0.12"/><circle cx="7.50" cy="4.50" r="0.12"/><circle cx="8.50" cy="4.50" r="0.12"/><circle cx="9.50" cy="4.50" r="0.12"/><circle cx="10.50" cy="4.50" r="0.12"/><circle cx="11.50" cy="4.50" r="0.12"/><circle cx="12.50" cy="4.50" r="0.12"/><circle cx="13.50" cy="4.50" r="0.12"/><circle cx="0.50" cy="5.50" r="0.12"/><circle cx="1.50" cy="5.50" r="0.19"/><circle cx="2.50" cy="5.50" r="0.12"/><circle cx="3.50" cy="5.50" r="0.12"/><circle cx="4.50" cy="5.50" r="0.19"/><circle cx="5.50" cy="5.50" r="0.43"/><circle cx="6.50" cy="5.50" r="0.44"/><circle cx="7.50" cy="5.50" r="0.44"/><circle cx="8.50" cy="5.50" r="0.44"/><circle cx="9.50" cy="5.50" r="0.44"/><circle cx="10.50" cy="5.50" r="0.39"/><circle cx="11.50" cy="5.50" r="0.32"/><circle cx="12.50" cy="5.50" r="0.26"/><circle cx="13.50" cy="5.50" r="0.13"/><circle cx="0.50" cy="6.50" r="0.12"/><circle cx="1.50" cy="6.50" r="0.45"/><circle cx="2.50" cy="6.50" r="0.14"/><circle cx="3.50" cy="6.50" r="0.12"/><circle cx="4.50" cy="6.50" r="0.12"/><circle cx="5.50" cy="6.50" r="0.12"/><circle cx="6.50" cy="6.50" r="0.12"/><circle cx="7.50" cy="6.50" r="0.12"/><circle cx="8.50" cy="6.50" r="0.12"/><circle cx="9.50" cy="6.50" r="0.12"/><circle cx="10.50" cy="6.50" r="0.12"/><circle cx="11.50" cy="6.50" r="0.12"/><circle cx="12.50" cy="6.50" r="0.16"/><circle cx="13.50" cy="6.50" r="0.28"/><circle cx="0.50" cy="7.50" r="0.29"/><circle cx="1.50" cy="7.50" r="0.59"/><circle cx="2.50" cy="7.50" r="0.38"/><circle cx="3.50" cy="7.50" r="0.12"/><circle cx="4.50" cy="7.50" r="0.29"/><circle cx="5.50" cy="7.50" r="0.44"/><circle cx="6.50" cy="7.50" r="0.44"/><circle cx="7.50" cy="7.50" r="0.45"/><circle cx="8.50" cy="7.50" r="0.43"/><circle cx="9.50" cy="7.50" r="0.38"/><circle cx="10.50" cy="7.50" r="0.31"/><circle cx="11.50" cy="7.50" r="0.12"/><circle cx="12.50" cy="7.50" r="0.22"/><circle cx="13.50" cy="7.50" r="0.67"/><circle cx="0.50" cy="8.50" r="0.12"/><circle cx="1.50" cy="8.50" r="0.12"/><circle cx="2.50" cy="8.50" r="0.12"/><circle cx="3.50" cy="8.50" r="0.12"/><circle cx="4.50" cy="8.50" r="0.12"/><circle cx="5.50" cy="8.50" r="0.12"/><circle cx="6.50" cy="8.50" r="0.12"/><circle cx="7.50" cy="8.50" r="0.12"/><circle cx="8.50" cy="8.50" r="0.12"/><circle cx="9.50" cy="8.50" r="0.12"/><circle cx="10.50" cy="8.50" r="0.12"/><circle cx="11.50" cy="8.50" r="0.36"/><circle cx="12.50" cy="8.50" r="0.55"/><circle cx="13.50" cy="8.50" r="0.55"/><circle cx="0.50" cy="9.50" r="0.35"/><circle cx="1.50" cy="9.50" r="0.52"/><circle cx="2.50" cy="9.50" r="0.12"/><circle cx="3.50" cy="9.50" r="0.12"/><circle cx="4.50" cy="9.50" r="0.37"/><circle cx="5.50" cy="9.50" r="0.44"/><circle cx="6.50" cy="9.50" r="0.45"/><circle cx="7.50" cy="9.50" r="0.42"/><circle cx="8.50" cy="9.50" r="0.36"/><circle cx="9.50" cy="9.50" r="0.12"/><circle cx="10.50" cy="9.50" r="0.37"/><circle cx="11.50" cy="9.50" r="0.37"/><circle cx="12.50" cy="9.50" r="0.61"/><circle cx="13.50" cy="9.50" r="0.43"/><circle cx="0.50" cy="10.50" r="0.36"/><circle cx="1.50" cy="10.50" r="0.56"/><circle cx="2.50" cy="10.50" r="0.13"/><circle cx="3.50" cy="10.50" r="0.12"/><circle cx="4.50" cy="10.50" r="0.12"/><circle cx="5.50" cy="10.50" r="0.12"/><circle cx="6.50" cy="10.50" r="0.12"/><circle cx="7.50" cy="10.50" r="0.12"/><circle cx="8.50" cy="10.50" r="0.14"/><circle cx="9.50" cy="10.50" r="0.41"/><circle cx="10.50" cy="10.50" r="0.25"/><circle cx="11.50" cy="10.50" r="0.58"/><circle cx="12.50" cy="10.50" r="0.51"/><circle cx="13.50" cy="10.50" r="0.33"/><circle cx="0.50" cy="11.50" r="0.12"/><circle cx="1.50" cy="11.50" r="0.12"/><circle cx="2.50" cy="11.50" r="0.12"/><circle cx="3.50" cy="11.50" r="0.12"/><circle cx="4.50" cy="11.50" r="0.44"/><circle cx="5.50" cy="11.50" r="0.44"/><circle cx="6.50" cy="11.50" r="0.41"/><circle cx="7.50" cy="11.50" r="0.36"/><circle cx="8.50" cy="11.50" r="0.39"/><circle cx="9.50" cy="11.50" r="0.32"/><circle cx="10.50" cy="11.50" r="0.53"/><circle cx="11.50" cy="11.50" r="0.51"/><circle cx="12.50" cy="11.50" r="0.44"/><circle cx="13.50" cy="11.50" r="0.25"/><circle cx="0.50" cy="12.50" r="0.12"/><circle cx="1.50" cy="12.50" r="0.12"/><circle cx="2.50" cy="12.50" r="0.12"/><circle cx="3.50" cy="12.50" r="0.12"/><circle cx="4.50" cy="12.50" r="0.12"/><circle cx="5.50" cy="12.50" r="0.12"/><circle cx="6.50" cy="12.50" r="0.24"/><circle cx="7.50" cy="12.50" r="0.53"/><circle cx="8.50" cy="12.50" r="0.56"/><circle cx="9.50" cy="12.50" r="0.59"/><circle cx="10.50" cy="12.50" r="0.49"/><circle cx="11.50" cy="12.50" r="0.43"/><circle cx="12.50" cy="12.50" r="0.38"/><circle cx="13.50" cy="12.50" r="0.18"/><circle cx="0.50" cy="13.50" r="0.12"/><circle cx="1.50" cy="13.50" r="0.12"/><circle cx="2.50" cy="13.50" r="0.12"/><circle cx="3.50" cy="13.50" r="0.12"/><circle cx="4.50" cy="13.50" r="0.12"/><circle cx="5.50" cy="13.50" r="0.25"/><circle cx="6.50" cy="13.50" r="0.68"/><circle cx="7.50" cy="13.50" r="0.62"/><circle cx="8.50" cy="13.50" r="0.54"/><circle cx="9.50" cy="13.50" r="0.48"/><circle cx="10.50" cy="13.50" r="0.42"/><circle cx="11.50" cy="13.50" r="0.37"/><circle cx="12.50" cy="13.50" r="0.33"/><circle cx="13.50" cy="13.50" r="0.13"/></svg></span><span>Field Notes</span></h1>
     <div class="srch"><div class="sbox"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="6" cy="6" r="4"/><path d="M9 9l3.5 3.5"/></svg><input id="q" type="search" placeholder="Search tasks" autocomplete="off" aria-label="Search tasks and updates"><button type="button" class="sgo" tabindex="-1">Search</button></div></div>
-    <div class="hact"><span id="status"></span><div class="dw"><button id="b-data" aria-haspopup="menu" aria-expanded="false" title="Export, import and manage your data"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>Data<svg class="car" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3.5l3 3 3-3"/></svg></button><div class="dm" id="dm" role="menu"><button id="b-exp" role="menuitem" title="Download all tasks, updates and day settings as a JSON file"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 9V2M4 5l3-3 3 3M2 10v2h10v-2"/></svg>Export</button><button id="b-imp" role="menuitem" title="Load a previously exported JSON file"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 2v7M4 6l3 3 3-3M2 10v2h10v-2"/></svg>Import</button><div class="dsep"></div><button id="b-man" role="menuitem" title="Review and clean up everything stored"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 4h10M2 7h10M2 10h10"/><circle cx="5" cy="4" r="1.3" fill="var(--card)"/><circle cx="9" cy="7" r="1.3" fill="var(--card)"/><circle cx="6" cy="10" r="1.3" fill="var(--card)"/></svg>Manage</button></div></div><input type="file" id="f-imp" accept=".json,application/json" hidden></div>
+    <div class="hact"><span id="status"></span><div class="dw"><button id="b-data" aria-haspopup="menu" aria-expanded="false" title="Export, import and manage your data"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>Data<svg class="car" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3.5l3 3 3-3"/></svg></button><div class="dm" id="dm" role="menu"><div id="acct" class="acct" hidden></div><button id="b-out" role="menuitem" hidden>Sign out</button><div id="acct-sep" class="dsep" hidden></div><button id="b-exp" role="menuitem" title="Download all tasks, updates and day settings as a JSON file"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 9V2M4 5l3-3 3 3M2 10v2h10v-2"/></svg>Export</button><button id="b-imp" role="menuitem" title="Load a previously exported JSON file"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 2v7M4 6l3 3 3-3M2 10v2h10v-2"/></svg>Import</button><div class="dsep"></div><button id="b-man" role="menuitem" title="Review and clean up everything stored"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 4h10M2 7h10M2 10h10"/><circle cx="5" cy="4" r="1.3" fill="var(--card)"/><circle cx="9" cy="7" r="1.3" fill="var(--card)"/><circle cx="6" cy="10" r="1.3" fill="var(--card)"/></svg>Manage</button></div></div><input type="file" id="f-imp" accept=".json,application/json" hidden></div>
   </header>
   <div class="grid">
     <nav class="panel"><div id="nvh" class="nvh"></div><div id="days"></div><button id="tdb" class="tdb">Today</button></nav>
@@ -508,6 +517,19 @@ h1{white-space:nowrap}
     </section>
   </div>
 </div>
+<div id="auth" class="authb" hidden>
+  <form id="auth-f" class="authc" autocomplete="on">
+    <h2>Sign in to Field Notes</h2>
+    <p class="sub">Your tasks and attachments sync across your devices.</p>
+    <label for="au-email">Email</label>
+    <input id="au-email" type="email" autocomplete="email" required>
+    <label for="au-pass">Password</label>
+    <input id="au-pass" type="password" autocomplete="current-password" minlength="6" required>
+    <div id="au-msg" class="aumsg" role="status"></div>
+    <div class="row"><button class="pri" type="submit" id="au-in">Sign in</button><button type="button" id="au-up">Create account</button></div>
+  </form>
+</div>
+<script src="config.js"></script>
 <script>
 (function(){
 var notes=[],db=null,q="",openIds={},colIds=(function(){try{return JSON.parse(localStorage.getItem("wt-col")||"{}")||{}}catch(e){return{}}})();
@@ -656,9 +678,90 @@ function remove(id){
   render();
   if(db)db.collection("notes").doc(id).delete().catch(function(){});else lsSet("wt-notes",notes);
 }
+/* sync + accounts via Supabase (used when config.js has a URL and key, outside Claude) */
+function loadScript(src){return new Promise(function(res,rej){var t=document.createElement("script");t.src=src;t.onload=res;t.onerror=function(){rej(new Error("couldn’t load "+src))};document.head.appendChild(t)})}
+async function supaInit(){
+  var cfg=window.FN_CONFIG||{};
+  if(!cfg.supabaseUrl||!cfg.supabaseKey)return null;
+  await loadScript("https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js");
+  var client=window.supabase.createClient(cfg.supabaseUrl,cfg.supabaseKey);
+  var r=await client.auth.getSession(),session=r.data&&r.data.session;
+  if(!session)session=await signInScreen(client);
+  var uid=session.user.id;
+  client.auth.onAuthStateChange(function(ev){if(ev==="SIGNED_OUT")location.reload()});
+  $("acct").textContent=session.user.email||"";$("acct").hidden=false;$("b-out").hidden=false;$("acct-sep").hidden=false;
+  $("b-out").onclick=function(){client.auth.signOut()};
+  function fail(r){if(r&&r.error)throw r.error;return r}
+  var BUCKET="attachments",SEVEN_DAYS=604800;
+  async function signUrls(ids){
+    ids=ids.filter(function(id){return!localUrl[id]});if(!ids.length)return;
+    var r=await client.storage.from(BUCKET).createSignedUrls(ids.map(function(id){return uid+"/"+id}),SEVEN_DAYS);
+    (r.data||[]).forEach(function(x){if(x.signedUrl&&x.path)localUrl[x.path.split("/").pop()]=x.signedUrl});
+  }
+  function fileIds(rows){var o=[];rows.forEach(function(row){((row.data&&row.data.updates)||[]).forEach(function(u){(u.files||[]).forEach(function(f){if(f&&f.id)o.push(f.id)})})});return o}
+  var dbShim={collection:function(kind){return{
+    doc:function(id){return{
+      set:async function(data){fail(await client.from("items").upsert({user_id:uid,kind:kind,id:id,data:data,updated_at:new Date().toISOString()}))},
+      delete:async function(){fail(await client.from("items").delete().eq("kind",kind).eq("id",id))}
+    }},
+    onSnapshot:function(ok,err){
+      var timer=null,dead=false;
+      async function load(){
+        try{
+          var r=fail(await client.from("items").select("id,data").eq("kind",kind));
+          var rows=r.data||[];
+          if(kind==="notes")await signUrls(fileIds(rows));
+          if(!dead)ok({docs:rows.map(function(row){return{id:row.id,data:function(){return row.data}}})});
+        }catch(e){if(!dead&&err)err(e)}
+      }
+      function soon(){clearTimeout(timer);timer=setTimeout(load,150)}
+      load();
+      var ch=client.channel("items-"+kind+"-"+Math.random().toString(36).slice(2)).on("postgres_changes",{event:"*",schema:"public",table:"items",filter:"user_id=eq."+uid},function(p){var k=(p.new&&p.new.kind)||(p.old&&p.old.kind);if(!k||k===kind)soon()}).subscribe();
+      return function(){dead=true;client.removeChannel(ch)};
+    }
+  }}};
+  var assetShim={local:true,
+    upload:async function(f,opt){
+      if(f.size>20971520)throw{code:"too_large"};
+      var b=new Uint8Array(16);crypto.getRandomValues(b);
+      var id=Array.prototype.map.call(b,function(x){return(x<16?"0":"")+x.toString(16)}).join("");
+      var up=await client.storage.from(BUCKET).upload(uid+"/"+id,f,{contentType:(opt&&opt.type)||f.type,upsert:false});
+      if(up.error)throw{code:/exceed|size|limit/i.test(up.error.message||"")?"too_large":"failed"};
+      await signUrls([id]);
+      return{id:id,sizeBytes:f.size};
+    },
+    delete:async function(id){delete localUrl[id];await client.storage.from(BUCKET).remove([uid+"/"+id])}
+  };
+  return{db:dbShim,assets:assetShim};
+}
+function signInScreen(client){
+  return new Promise(function(res){
+    var box=$("auth"),form=$("auth-f"),msg=$("au-msg");box.hidden=false;
+    function say(t,err){msg.textContent=t;msg.className="aumsg"+(err?" err":"")}
+    function creds(){return{email:$("au-email").value.trim(),password:$("au-pass").value}}
+    function done(session){box.hidden=true;res(session)}
+    form.onsubmit=async function(e){
+      e.preventDefault();say("Signing in…");
+      var r=await client.auth.signInWithPassword(creds());
+      if(r.error)say(r.error.message,true);else done(r.data.session);
+    };
+    $("au-up").onclick=async function(){
+      if(!form.reportValidity())return;say("Creating account…");
+      var r=await client.auth.signUp(creds());
+      if(r.error)say(r.error.message,true);
+      else if(r.data.session)done(r.data.session);
+      else say("Account created. Check your email to confirm it, then sign in.");
+    };
+  });
+}
 async function init(){
-  try{(window.claude&&claude.use?claude.use("assets"):Promise.resolve(null)).catch(function(){return null}).then(function(a){return a||localAssets()}).then(function(a){if(a){assetsNS=a;render()}}).catch(function(){})}catch(e){}
-  try{if(window.claude&&claude.use)db=await claude.use("db")}catch(e){db=null}
+  var sb=null;
+  if(!(window.claude&&claude.use)){try{sb=await supaInit()}catch(e){status("Couldn\u2019t reach the sync service: "+(e&&e.message||e))}}
+  if(sb){assetsNS=sb.assets;db=sb.db}
+  else{
+    try{(window.claude&&claude.use?claude.use("assets"):Promise.resolve(null)).catch(function(){return null}).then(function(a){return a||localAssets()}).then(function(a){if(a){assetsNS=a;render()}}).catch(function(){})}catch(e){}
+    try{if(window.claude&&claude.use)db=await claude.use("db")}catch(e){db=null}
+  }
   if(db){
     db.collection("notes").onSnapshot(function(s){
       notes=s.docs.map(function(d){return Object.assign({id:d.id},d.data())});
