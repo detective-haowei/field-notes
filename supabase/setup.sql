@@ -1,4 +1,5 @@
--- Run this once in the Supabase dashboard: SQL Editor -> New query -> Run.
+-- Run in the Supabase dashboard: SQL Editor -> New query -> Run.
+-- Safe to run more than once.
 
 -- One row per task or day setting, owned by the signed-in user.
 create table if not exists public.items (
@@ -19,7 +20,15 @@ create policy "own items" on public.items
   with check (user_id = auth.uid());
 
 -- Live sync between devices.
-alter publication supabase_realtime add table public.items;
+do $$
+begin
+  if not exists (
+    select 1 from pg_publication_tables
+    where pubname = 'supabase_realtime' and schemaname = 'public' and tablename = 'items'
+  ) then
+    alter publication supabase_realtime add table public.items;
+  end if;
+end $$;
 
 -- Private file storage for attachments; each user can only touch their own folder.
 insert into storage.buckets (id, name, public)
