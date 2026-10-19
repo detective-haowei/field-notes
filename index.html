@@ -657,7 +657,7 @@ function remove(id){
   if(db)db.collection("notes").doc(id).delete().catch(function(){});else lsSet("wt-notes",notes);
 }
 async function init(){
-  try{if(window.claude&&claude.use)claude.use("assets").then(function(a){if(a){assetsNS=a;render()}}).catch(function(){})}catch(e){}
+  try{(window.claude&&claude.use?claude.use("assets"):Promise.resolve(null)).catch(function(){return null}).then(function(a){return a||localAssets()}).then(function(a){if(a){assetsNS=a;render()}}).catch(function(){})}catch(e){}
   try{if(window.claude&&claude.use)db=await claude.use("db")}catch(e){db=null}
   if(db){
     db.collection("notes").onSnapshot(function(s){
@@ -1082,7 +1082,29 @@ var MIMEX={png:"image/png",jpg:"image/jpeg",jpeg:"image/jpeg",gif:"image/gif",we
 function fileType(f){var ext=(f.name.split(".").pop()||"").toLowerCase(),t=MIMEX[ext];if(t)return t;var ty=(f.type||"").split(";")[0];return Object.keys(MIMEX).some(function(k){return MIMEX[k]===ty})?ty:""}
 function fmtSize(b){return b<1024?b+" B":b<1048576?Math.round(b/1024)+" KB":(b/1048576).toFixed(1)+" MB"}
 var localUrl={};
-function blobSrc(id){return"/_blob/"+id}
+function blobSrc(id){return localUrl[id]||(assetsNS&&assetsNS.local?"":"/_blob/"+id)}
+/* attachments outside Claude: keep the files in this browser (IndexedDB) */
+function localAssets(){
+  function req(q){return new Promise(function(res,rej){q.onsuccess=function(){res(q.result)};q.onerror=function(){rej(q.error)}})}
+  var o=indexedDB.open("fn-files",1);
+  o.onupgradeneeded=function(){o.result.createObjectStore("files",{keyPath:"id"})};
+  return req(o).then(function(idb){
+    function st(m){return idb.transaction("files",m).objectStore("files")}
+    return req(st("readonly").getAll()).then(function(rows){
+      rows.forEach(function(r){localUrl[r.id]=URL.createObjectURL(r.blob)});
+      return{local:true,
+        upload:function(f,opt){
+          if(f.size>20971520)return Promise.reject({code:"too_large"});
+          var b=new Uint8Array(16);crypto.getRandomValues(b);
+          var id=Array.prototype.map.call(b,function(x){return(x<16?"0":"")+x.toString(16)}).join("");
+          var blob=f.slice(0,f.size,(opt&&opt.type)||f.type);
+          return req(st("readwrite").put({id:id,blob:blob})).then(function(){localUrl[id]=URL.createObjectURL(blob);return{id:id,sizeBytes:f.size}},function(e){throw{code:e&&e.name==="QuotaExceededError"?"quota_or_state":"failed"}});
+        },
+        delete:function(id){if(localUrl[id]){URL.revokeObjectURL(localUrl[id]);delete localUrl[id]}return req(st("readwrite").delete(id))}
+      };
+    });
+  });
+}
 var CLIP_SVG='<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.5 6v11.5c0 2.21-1.79 4-4 4s-4-1.79-4-4V5c0-1.38 1.12-2.5 2.5-2.5s2.5 1.12 2.5 2.5v10.5c0 .55-.45 1-1 1s-1-.45-1-1V6H10v9.5c0 1.38 1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5V5c0-2.21-1.79-4-4-4S7 2.79 7 5v12.5c0 3.04 2.46 5.5 5.5 5.5s5.5-2.46 5.5-5.5V6h-1.5z"/></svg>';
 var FILE_SVG='<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 1.5h4l3 3v8h-7z"/><path d="M7.5 1.5v3h3"/></svg>';
 function attachEl(a,pending){
