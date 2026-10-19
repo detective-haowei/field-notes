@@ -1213,13 +1213,13 @@ async function exportData(){
   var text=JSON.stringify(payload,null,2),name="work-notes-"+todayK+".json",dl=null;
   try{if(window.claude&&claude.use)dl=await claude.use("downloads")}catch(e){dl=null}
   if(dl){
-    try{var r=await dl.save({filename:name,data:text});status(r&&r.status==="saved"?"Exported "+notes.length+" tasks":"Export sent")}
+    try{var r=await dl.save({filename:name,data:text});flash(r&&r.status==="saved"?"Exported "+notes.length+" tasks":"Export sent")}
     catch(e){if(!e||e.code!=="declined")status("Couldn’t export")}
     return;
   }
   try{
     var a=document.createElement("a");a.href=URL.createObjectURL(new Blob([text],{type:"application/json"}));a.download=name;document.body.appendChild(a);a.click();a.remove();
-    status("Exported "+notes.length+" tasks");
+    flash("Exported "+notes.length+" tasks");
   }catch(e){status("Export isn’t available in this view")}
 }
 function importData(file){
@@ -1246,7 +1246,7 @@ function importData(file){
     notes.sort(function(x,y){return(y.created||0)-(x.created||0)});
     if(!db){lsSet("wt-notes",notes);lsSet("wt-days",days)}
     render();
-    status("Imported "+added+" new"+(updated?", "+updated+" updated":"")+(dayCount?" · "+dayCount+" day settings":""));
+    flash("Imported "+added+" new"+(updated?", "+updated+" updated":"")+(dayCount?" · "+dayCount+" day settings":""));
   };
   fr.readAsText(file);
 }
