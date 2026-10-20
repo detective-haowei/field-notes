@@ -1,0 +1,159 @@
+/* The deadline / date picker, positioned next to whatever opened it. */
+.dpb {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background: transparent;
+}
+
+.dp {
+  position: fixed;
+  z-index: 91;
+  box-sizing: border-box;
+  width: 320px;
+  padding: 20px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: 0 16px 48px rgb(0 0 0 / 14%);
+}
+
+.dph {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.dpt {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.dpv {
+  display: flex;
+  gap: 4px;
+}
+
+.dpn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  background: none;
+  border-radius: 8px;
+  color: var(--mute);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.dpn:hover {
+  background: color-mix(in srgb, var(--mute) 14%, transparent);
+  color: var(--ink);
+}
+
+.dpw,
+.dpg {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+.dpw {
+  margin-bottom: 8px;
+}
+
+.dpw span {
+  text-align: center;
+  font-size: 12px;
+  color: var(--mute);
+  opacity: 0.8;
+}
+
+.dpd {
+  position: relative;
+  height: 36px;
+  padding: 0;
+  border: none;
+  background: none;
+  border-radius: 50%;
+  font-size: 13px;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.dpd.we {
+  color: var(--mute);
+}
+
+.dpd:hover {
+  background: color-mix(in srgb, var(--mute) 14%, transparent);
+}
+
+/* A dot under today. */
+.dpd.now::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 4px;
+  width: 4px;
+  height: 4px;
+  margin-left: -2px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.dpd.sel {
+  background: var(--pf);
+  color: var(--pi);
+}
+
+.dpd.sel.now::after {
+  background: var(--pi);
+}
+
+/* Today / Tomorrow / Next week. */
+.dpf {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.dpf button {
+  flex: 1;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--line);
+  background: none;
+  border-radius: 8px;
+  font-size: 12px;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.dpf button:hover {
+  background: color-mix(in srgb, var(--mute) 12%, transparent);
+}
+
+.dpc {
+  display: block;
+  width: 100%;
+  margin-top: 12px;
+  padding: 8px 0 0;
+  border: none;
+  background: none;
+  font-size: 12px;
+  color: var(--mute);
+  cursor: pointer;
+}
+
+.dpc:hover {
+  color: var(--danger);
+}

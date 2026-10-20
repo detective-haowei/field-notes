@@ -1,0 +1,397 @@
+/* A task card: header with body and menu, tag chips, the update log, the
+   add-update box, and the footer with the day count and Complete. */
+.note {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+  padding: 16px 16px 12px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+/* Completed tasks keep their banner at full strength and fade the rest. */
+.note.fin .cb,
+.note.fin .ups,
+.note.fin .addup,
+.note.fin .lw {
+  opacity: 0.5;
+}
+
+.fb {
+  margin: -16px -16px 0;
+  padding: 8px 16px;
+  background: color-mix(in srgb, var(--mute) 14%, var(--card));
+  color: var(--mute);
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 7px 7px 0 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.hd {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.hd .cb {
+  flex: 1;
+  min-width: 0;
+}
+
+.hd .mw {
+  flex: none;
+  margin: -4px -8px 0 0;
+}
+
+.hd input[type="date"] {
+  width: auto;
+  margin-right: auto;
+  font-size: 12px;
+  padding: 2px 6px;
+}
+
+.cb {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cb .row {
+  margin-top: 12px;
+}
+
+.cb textarea {
+  min-height: 96px;
+  overflow: auto;
+  line-height: 1.45;
+  padding: 10px 12px;
+}
+
+.note .hd .b,
+.note .hd .t {
+  font-weight: 500;
+  color: color-mix(in srgb, var(--ink) 85%, var(--card));
+}
+
+.note .b {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.note textarea {
+  width: 100%;
+  min-height: 90px;
+  resize: vertical;
+}
+
+.note input {
+  width: 100%;
+}
+
+.tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+/* Deadline chip: neutral, then accented today, then red once overdue. */
+.tg.dl {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.tg.dl.td {
+  background: color-mix(in srgb, var(--accent) 14%, var(--card));
+  color: var(--accent);
+}
+
+.tg.dl.od {
+  background: color-mix(in srgb, var(--danger) 14%, var(--card));
+  color: var(--danger);
+}
+
+/* Overflow menu. */
+.mw {
+  position: relative;
+}
+
+.kb {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border-radius: 8px;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.kb:hover {
+  background: var(--bg);
+}
+
+.mn {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  min-width: 110px;
+  overflow: hidden;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: 0 4px 14px rgb(0 0 0 / 15%);
+}
+
+.mn button {
+  border: none;
+  border-radius: 0;
+  text-align: left;
+  padding: 8px 12px;
+  background: none;
+}
+
+.mn button:hover {
+  background: var(--bg);
+}
+
+.mn .dl {
+  color: var(--danger);
+}
+
+/* Update log. */
+.ups {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--line);
+}
+
+.ups:has(.uh.col) {
+  padding-top: 10px;
+}
+
+.ups .up + .up {
+  border-top: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
+  padding-top: 8px;
+}
+
+.uh {
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+  gap: 5px;
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--mute);
+}
+
+.uh:hover {
+  color: var(--ink);
+}
+
+.uh svg {
+  order: 3;
+  margin-left: auto;
+  transition: transform 0.15s;
+}
+
+.uh.col svg {
+  transform: rotate(-90deg);
+}
+
+.ucnt,
+.cr {
+  font-size: 12px;
+  font-weight: 400;
+  color: color-mix(in srgb, var(--mute) 65%, var(--card));
+}
+
+.up {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+/* The relative date, as a fixed-width gutter. */
+.ud {
+  display: inline-block;
+  flex: none;
+  width: 88px;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  text-align: left;
+  white-space: nowrap;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--pi);
+  cursor: default;
+  text-decoration: none;
+}
+
+.dtx {
+  display: inline-block;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--pf) 40%, transparent);
+  color: var(--pi);
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.ut {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.ut a,
+.ut a:hover {
+  text-decoration: none;
+}
+
+.ut a {
+  color: color-mix(in srgb, var(--mute) 78%, var(--card));
+}
+
+.ut a:hover {
+  color: color-mix(in srgb, var(--ink) 78%, var(--card));
+}
+
+.ut .tg {
+  display: inline-block;
+  padding: 0 6px;
+  margin: 0 1px;
+  line-height: 1.5;
+  font-size: 12px;
+}
+
+.note .up textarea.ue {
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+  padding: 4px 8px;
+  font-size: 13px;
+  line-height: 1.45;
+  resize: none;
+  overflow: hidden;
+  background: var(--card);
+}
+
+/* Delete, which stays faint until the row is hovered and asks once. */
+.up .dx {
+  padding: 0 4px;
+  font-size: 17px;
+  line-height: 1;
+  white-space: nowrap;
+  color: color-mix(in srgb, var(--mute) 70%, var(--card));
+  opacity: 0;
+  transition: opacity 0.12s;
+}
+
+.up:hover .dx,
+.up .dx.arm,
+.up .dx:focus-visible {
+  opacity: 1;
+}
+
+.up .dx:hover {
+  color: color-mix(in srgb, var(--ink) 72%, var(--card));
+}
+
+.up .dx.arm {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--danger);
+}
+
+@media (hover: none) {
+  .up .dx {
+    opacity: 0.55;
+  }
+}
+
+.more {
+  align-self: flex-start;
+  border: none;
+  background: none;
+  color: var(--accent);
+  padding: 0;
+  font-size: 12px;
+}
+
+/* Footer. */
+.meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: 4px;
+  font-size: 13px;
+}
+
+.meta > span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+}
+
+.lw {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.bd {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--mute);
+  white-space: nowrap;
+}
+
+.chk {
+  padding: 3px 10px;
+  font-size: 13px;
+}
+
+.chk:hover {
+  border-color: var(--focus);
+  color: inherit;
+}
+
+@media (max-width: 560px) {
+  .note {
+    padding: 14px 14px 12px;
+  }
+
+  .fb {
+    margin: -14px -14px 0;
+    padding: 8px 14px;
+  }
+}

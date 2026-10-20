@@ -1,0 +1,197 @@
+/* Project / people pickers and the deadline button, used by both the composer
+   and the inline task editor. */
+.tfs {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 4px 10px;
+  margin-top: 8px;
+}
+
+.tf {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 0 1 auto;
+  min-width: 0;
+  min-height: 30px;
+}
+
+.ta2 {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  flex-wrap: wrap;
+  gap: 4px;
+  min-width: 0;
+}
+
+.tf .tg {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* "+ Projects" / "+ People" / "+ Deadline". */
+.tadd,
+.foot .pri {
+  display: inline-flex;
+  align-items: center;
+  box-sizing: border-box;
+  height: 30px;
+  padding: 0 12px;
+  font-size: 13px;
+  line-height: 1;
+}
+
+.tadd {
+  border: 1px solid color-mix(in srgb, var(--mute) 45%, transparent);
+  border-radius: 8px;
+  background: none;
+  color: var(--mute);
+  white-space: nowrap;
+}
+
+.tadd:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.tadd.dlb.set {
+  color: var(--ink);
+}
+
+/* The little ✕ on a chip. */
+.tx {
+  border: none;
+  background: none;
+  padding: 0 0 0 5px;
+  font-size: 12px;
+  color: inherit;
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+.tx:hover {
+  opacity: 1;
+}
+
+.tf input {
+  width: auto;
+  min-width: 110px;
+  border: none;
+  background: none;
+  padding: 2px 4px;
+  font-size: 13px;
+}
+
+.tf input:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+/* The dropdown of existing tags. */
+.pop {
+  position: absolute;
+  left: 0;
+  top: calc(100% + 4px);
+  z-index: 30;
+  width: min(260px, 80vw);
+  padding: 8px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 18%);
+}
+
+.ph {
+  font-size: 12px;
+  color: var(--mute);
+  padding: 2px 4px 6px;
+}
+
+.tf .pop input {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  border-radius: 8px;
+  padding: 7px 10px;
+  font-size: 13px;
+}
+
+.tf .pop input:focus {
+  outline: none;
+  border-color: var(--focus);
+  box-shadow: none;
+}
+
+.opts {
+  margin-top: 6px;
+  max-height: 220px;
+  overflow: auto;
+}
+
+.opt {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.opt:hover {
+  background: var(--bg);
+}
+
+.ck {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid var(--line);
+  border-radius: 4px;
+  font-size: 12px;
+  line-height: 1;
+}
+
+.opt.on .ck {
+  background: var(--pf);
+  border-color: color-mix(in srgb, var(--accent) 40%, transparent);
+  color: var(--pi);
+}
+
+/* Inside a task card the fields stack rather than sit in a row. */
+.cb .tfs {
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 10px 8px;
+  margin-top: 10px;
+}
+
+.cb .tf {
+  align-items: flex-start;
+  flex: 0 0 auto;
+  min-height: 0;
+  max-width: 100%;
+}
+
+.cb .ta2 {
+  flex: none;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.cb .ta2 .tg {
+  align-self: flex-start;
+}
+
+/* The deadline field keeps its chip and ✕ side by side. */
+.cb .ta2:has(.dlb) {
+  flex-direction: row;
+  align-items: center;
+  gap: 2px;
+}
