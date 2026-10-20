@@ -27,6 +27,8 @@ jobs:
           node-version: 20
           cache: npm
       - run: npm ci
+      # Nothing published inside the cooldown window may reach the lockfile.
+      - run: npm run deps:check
       # Builds to dist/. public/config.js and public/sw.js are copied in as-is.
       - run: npm run build
       - uses: actions/configure-pages@v5
