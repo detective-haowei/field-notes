@@ -1,0 +1,209 @@
+/* The add-update box, the files staged in it, and attachments on a saved
+   update. */
+.addup {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 2px;
+  padding: 6px 6px 6px 4px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  transition: border-color 0.15s;
+}
+
+.addup:focus-within,
+.addup.drop {
+  border-color: var(--focus);
+}
+
+/* While a file is dragged over it. */
+.addup.drop {
+  background: color-mix(in srgb, var(--pf) 35%, var(--card));
+}
+
+.note .addup textarea,
+.note .addup textarea:focus {
+  flex: 1;
+  width: 100%;
+  min-height: 56px;
+  padding: 6px 8px;
+  border: 0;
+  outline: 0;
+  box-shadow: none;
+  background: transparent;
+  font-size: 13px;
+  line-height: 1.4;
+  resize: none;
+  overflow: hidden;
+}
+
+/* Toolbar under the field: attach on the left, send on the right. */
+.atb {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 2px;
+}
+
+.atl {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.clip {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--mute);
+}
+
+.clip:hover {
+  color: var(--ink);
+  background: color-mix(in srgb, var(--line) 60%, transparent);
+}
+
+/* Send lights up once there is something to add. */
+.asend {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--line) 60%, transparent);
+  color: var(--mute);
+  cursor: default;
+  transition:
+    background 0.15s,
+    color 0.15s;
+}
+
+.asend.on {
+  background: var(--pf);
+  color: var(--pi);
+  cursor: pointer;
+}
+
+/* Staged files. */
+.pend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pend:empty {
+  display: none;
+}
+
+.addup .pend {
+  padding: 4px 6px 2px;
+}
+
+.pa {
+  position: relative;
+}
+
+.pa .att.img img {
+  height: 56px;
+  width: auto;
+  max-width: 120px;
+}
+
+.pa.busy {
+  opacity: 0.6;
+}
+
+.pax {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  border-radius: 50%;
+  font-size: 12px;
+  line-height: 1;
+  background: var(--card);
+  color: var(--mute);
+}
+
+.pax:hover {
+  color: var(--danger);
+  border-color: var(--danger);
+}
+
+/* Attachments on a saved update. */
+.atts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.att.img img {
+  display: block;
+  max-width: 100%;
+  height: 96px;
+  width: auto;
+  min-width: 64px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  object-fit: cover;
+}
+
+.att.vid {
+  display: block;
+  max-width: 100%;
+  max-height: 160px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+}
+
+/* Anything that is not an image or a video shows as a named chip. */
+.fch {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 260px;
+  min-height: 32px;
+  padding: 4px 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font-size: 12px;
+  color: var(--ink);
+  text-decoration: none;
+  background: var(--bg);
+}
+
+.fch:hover {
+  border-color: var(--focus);
+  color: var(--ink);
+}
+
+.fch svg {
+  flex: none;
+  color: var(--mute);
+}
+
+.fn2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.fs2 {
+  color: var(--mute);
+  flex: none;
+}

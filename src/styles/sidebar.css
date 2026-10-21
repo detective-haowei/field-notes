@@ -1,0 +1,416 @@
+/* Day navigator: a sticky month header over a scrolling list of every day in
+   the month, drawn as a ruled timeline. */
+nav.panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin-top: 16px;
+  overflow: hidden;
+  max-height: none;
+}
+
+.nvh {
+  position: relative;
+  z-index: 2;
+  flex: none;
+  margin: 0;
+  padding: 10px 10px 6px;
+  background: var(--card);
+  border-bottom: 1px solid transparent;
+  transition:
+    box-shadow 0.15s,
+    border-color 0.15s;
+}
+
+/* Shows a shadow once the list below has scrolled. */
+.nvh.stuck {
+  border-bottom-color: var(--line);
+  box-shadow: 0 10px 24px -4px rgb(0 0 0 / 5.5%);
+}
+
+/* The vertical rule, drawn as a repeating background so it scrolls with the
+   list: a long tick every 16px and a short one between. */
+.days {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 0 10px 10px 22px;
+  background:
+    linear-gradient(to bottom, var(--tick) 0 1px, transparent 1px) 8px 0 / 7px 16px repeat-y,
+    linear-gradient(to bottom, var(--tick) 0 1px, transparent 1px) 8px 0 / 4px 8px repeat-y;
+  background-attachment: local, local;
+}
+
+.day {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  width: 100%;
+  height: 32px;
+  padding: 0 8px 0 12px;
+  text-align: left;
+  border: none;
+  background: none;
+  border-radius: 8px;
+}
+
+/* The tick joining a day to the rule. */
+.day::after {
+  content: "";
+  position: absolute;
+  left: -14px;
+  top: 0;
+  width: 10px;
+  height: 1px;
+  background: var(--tick);
+  pointer-events: none;
+}
+
+/* Mondays get a longer tick. */
+.day.mo::after {
+  width: 16px;
+}
+
+.day > span:first-child {
+  flex: 1;
+  min-width: 0;
+}
+
+.day:hover {
+  background: var(--bg);
+}
+
+.day.on {
+  background: var(--ink);
+  color: var(--bg);
+}
+
+.day .n {
+  color: var(--mute);
+  font-size: 12px;
+}
+
+.day.on .n {
+  color: inherit;
+  opacity: 0.7;
+}
+
+/* Days off: weekends, public holidays, PTO and unpaid leave. */
+.day.we {
+  color: color-mix(in srgb, var(--mute) 62%, var(--card));
+  opacity: 1;
+}
+
+.day.we.on {
+  background: var(--mute);
+  color: var(--bg);
+}
+
+.day.all {
+  height: 34px;
+  padding: 0 8px;
+}
+
+.day.all::after {
+  display: none;
+}
+
+.allw {
+  background: var(--bg);
+  border-radius: 10px;
+  padding: 3px;
+}
+
+.allw .day.all {
+  font-weight: 600;
+}
+
+/* "Today" badge. */
+.tp {
+  background: var(--pf);
+  color: var(--pi);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 1px 8px;
+  border-radius: 999px;
+  letter-spacing: 0.03em;
+}
+
+/* Reason a day is off, e.g. "PTO" or a holiday name. */
+.rp {
+  flex: none;
+  max-width: 130px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+  padding: 3px 8px;
+  border-radius: 999px;
+  color: color-mix(in srgb, var(--mute) 85%, var(--card));
+  background: color-mix(in srgb, var(--mute) 14%, var(--card));
+}
+
+.day.on .rp {
+  background: color-mix(in srgb, var(--bg) 22%, transparent);
+  color: inherit;
+}
+
+/* Week divider, with the PDF summary button it reveals on hover. */
+.wkl {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 28px;
+  margin-top: 4px;
+  padding: 0 8px 0 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: color-mix(in srgb, var(--mute) 85%, var(--ink));
+  border-radius: 8px;
+  transition: background 0.12s;
+}
+
+.wkl:hover {
+  background: var(--bg);
+}
+
+.wkt {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.wks {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 22px;
+  padding: 0 4px;
+  border: none;
+  background: none;
+  border-radius: 6px;
+  font-size: 12px;
+  line-height: 1;
+  color: inherit;
+  opacity: 0;
+  transition: opacity 0.12s;
+}
+
+.wkl:hover .wks,
+.wks:focus-visible {
+  opacity: 1;
+}
+
+.wks:hover {
+  color: var(--accent);
+}
+
+@media (hover: none) {
+  .wks {
+    opacity: 1;
+  }
+}
+
+/* Month header and its picker. */
+.mh {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+  margin: 2px 0 6px;
+}
+
+.ch {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  background: none;
+  border-radius: 8px;
+  color: var(--mute);
+}
+
+.ch:hover {
+  background: var(--bg);
+  color: var(--ink);
+}
+
+.ml {
+  border: none;
+  background: none;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 4px 6px;
+  border-radius: 8px;
+}
+
+.ml:hover {
+  background: var(--bg);
+}
+
+.mpop {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  top: calc(100% - 2px);
+  z-index: 6;
+  padding: 8px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: 0 10px 28px rgb(0 0 0 / 14%);
+}
+
+.mph {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.myr {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.mgrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+}
+
+.mb {
+  border: none;
+  background: none;
+  border-radius: 8px;
+  padding: 8px 0;
+  font-size: 13px;
+  text-align: center;
+}
+
+.mb:hover {
+  background: var(--bg);
+}
+
+.mb.cur {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.mb.on {
+  background: var(--ink);
+  color: var(--bg);
+}
+
+.mtd {
+  display: block;
+  width: 100%;
+  margin-top: 6px;
+  border: none;
+  border-top: 1px solid var(--line);
+  border-radius: 0;
+  background: none;
+  color: var(--mute);
+  font-size: 12px;
+  padding: 8px 0 2px;
+}
+
+.mtd:hover {
+  color: var(--ink);
+}
+
+/* Floating "Today" button, shown only while today is off screen. */
+.tdb {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  z-index: 4;
+  width: auto;
+  padding: 9px 16px;
+  border: none;
+  border-radius: 10px;
+  background: var(--pf);
+  color: var(--pi);
+  font-size: 13px;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 20%);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(8px);
+  transition:
+    opacity 0.15s,
+    transform 0.15s;
+}
+
+.tdb.show {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+@media (max-width: 1024px) {
+  .wks span {
+    display: none;
+  }
+
+  .wks {
+    width: 24px;
+    justify-content: center;
+    padding: 0;
+  }
+}
+
+@media (max-width: 560px) {
+  .nvh {
+    padding: 6px 6px 4px;
+  }
+
+  .days {
+    padding: 0 6px 8px 18px;
+    background-position: 6px 0, 6px 0;
+  }
+
+  .day {
+    font-size: 13px;
+    padding: 0 4px 0 8px;
+  }
+
+  .day::after {
+    left: -12px;
+  }
+
+  .wkl {
+    padding-left: 8px;
+  }
+
+  .ml {
+    font-size: 13px;
+  }
+
+  /* The badge shrinks to a dot. */
+  .tp {
+    font-size: 0;
+    width: 8px;
+    height: 8px;
+    padding: 0;
+  }
+
+  .rp {
+    display: none;
+  }
+
+  .tdb {
+    left: 6px;
+    right: 6px;
+    bottom: 6px;
+  }
+}

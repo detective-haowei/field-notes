@@ -1,0 +1,241 @@
+/* The header spans the full viewport width while its contents stay aligned
+   with the 1080px column. */
+header {
+  position: relative;
+  z-index: 10;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  gap: 12px;
+  width: 100vw;
+  margin: -20px 0 0 calc(50% - 50vw);
+  padding: 12px max(18px, calc((100vw - 1080px) / 2 + 18px)) 12px
+    max(16px, calc((100vw - 1080px) / 2 + 16px));
+  background: var(--card);
+  border: 0 solid var(--line);
+  border-bottom-width: 1px;
+}
+
+h1 {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font-family: Manrope, system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+h1 svg {
+  flex: none;
+}
+
+/* The dot-matrix mark. */
+h1 .lg,
+h1 .lg svg {
+  width: 26px;
+  height: 26px;
+}
+
+h1 .lg {
+  display: inline-flex;
+  flex: none;
+  color: var(--ink);
+  overflow: visible;
+}
+
+h1 .lg svg {
+  display: block;
+}
+
+.status {
+  font-size: 12px;
+  color: var(--mute);
+}
+
+.hact {
+  display: flex;
+  align-items: center;
+  flex: none;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.hact button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  padding: 5px 12px;
+}
+
+/* Search: a compact field that widens while it has focus or content. */
+.srch {
+  display: flex;
+  align-items: center;
+  flex: 0 1 auto;
+  gap: 8px;
+  min-width: 0;
+  margin: 0 auto 0 8px;
+}
+
+.sbox {
+  position: relative;
+  flex: 0 1 190px;
+  width: 190px;
+  min-width: 96px;
+  transition: width 0.28s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.sbox:focus-within,
+.sbox.hv {
+  width: max(190px, min(420px, 42vw));
+  flex-basis: max(190px, min(420px, 42vw));
+}
+
+.sbox svg {
+  position: absolute;
+  left: 11px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--mute);
+  pointer-events: none;
+}
+
+.sbox input {
+  width: 100%;
+  height: 32px;
+  padding: 0 10px 0 33px;
+  font-size: 13px;
+  border-radius: 10px;
+  background: var(--card);
+  text-overflow: ellipsis;
+  transition: padding-right 0.28s;
+}
+
+.sbox:focus-within input,
+.sbox.hv input {
+  padding-right: 84px;
+}
+
+.sgo {
+  position: absolute;
+  right: 4px;
+  top: 4px;
+  height: 24px;
+  padding: 0 10px;
+  font-size: 12px;
+  line-height: 1;
+  border: none;
+  border-radius: 7px;
+  background: var(--pf);
+  color: var(--pi);
+  opacity: 0;
+  transform: translateX(8px) scale(0.96);
+  pointer-events: none;
+  transition:
+    opacity 0.2s 0.06s,
+    transform 0.24s 0.06s;
+}
+
+.sbox:focus-within .sgo,
+.sbox.hv .sgo {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+.sgo:hover {
+  background: color-mix(in srgb, var(--pf) 88%, var(--accent));
+}
+
+/* Data menu. */
+.dw {
+  position: relative;
+}
+
+.hact .data-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 12px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: inherit;
+  line-height: 1;
+}
+
+.hact .data-btn svg {
+  flex: none;
+  display: block;
+}
+
+.data-btn .car {
+  margin-left: 2px;
+  transition: transform 0.18s ease;
+}
+
+.data-btn.open .car {
+  transform: rotate(180deg);
+}
+
+.dm {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 6px);
+  z-index: 60;
+  min-width: 168px;
+  padding: 6px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  box-shadow: 0 12px 32px rgb(0 0 0 / 12%);
+}
+
+.dm button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  height: auto;
+  border: none;
+  background: none;
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-size: 13px;
+  text-align: left;
+}
+
+.dm button:hover {
+  background: var(--bg);
+}
+
+.dsep {
+  height: 1px;
+  background: var(--line);
+  margin: 6px 4px;
+}
+
+.acct {
+  padding: 8px 10px;
+  font-size: 12px;
+  color: var(--mute);
+  overflow-wrap: anywhere;
+  max-width: 220px;
+}
+
+@media (max-width: 760px) {
+  .srch {
+    order: 0;
+    flex: 0 1 auto;
+    max-width: none;
+    margin: 0 0 0 4px;
+  }
+}

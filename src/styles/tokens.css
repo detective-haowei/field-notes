@@ -1,0 +1,57 @@
+/* Colour and spacing tokens. The palette is a paper-and-highlighter one:
+   --accent is the green used for text and strokes, --pf/--pi the highlighter
+   fill and the ink that sits on it. */
+:root {
+  --bg: #f6f5f2;
+  --card: #fff;
+  --ink: #1d1d1b;
+  --mute: #6f6e69;
+  --line: #e4e2dc;
+  --accent: #5d6c10;
+  --pf: #e4f09c;
+  --pi: #2b3208;
+  --danger: #c0392b;
+  /* The dot grid printed across the page. */
+  --dot: #d9d5ca;
+  /* Rule for the sidebar's day ticks, tinted against the panel. */
+  --tick: color-mix(in srgb, var(--mute) 24%, var(--card));
+  --focus: color-mix(in srgb, var(--pf) 30%, var(--accent) 70%);
+  --ring: color-mix(in srgb, var(--pf) 55%, var(--accent) 45%);
+
+  color-scheme: light;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Dark values are declared twice: once for the system preference and once for
+   an explicit data-theme, so either can win. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #161615;
+    --card: #1f1f1d;
+    --ink: #efeee9;
+    --mute: #9a9892;
+    --line: #33322e;
+    --accent: #cfe07a;
+    --pf: #cfe383;
+    --pi: #1d2208;
+    --danger: #ef6b5c;
+    --dot: #32312d;
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #161615;
+  --card: #1f1f1d;
+  --ink: #efeee9;
+  --mute: #9a9892;
+  --line: #33322e;
+  --accent: #cfe07a;
+  --pf: #cfe383;
+  --pi: #1d2208;
+  --danger: #ef6b5c;
+  --dot: #32312d;
+  color-scheme: dark;
+}

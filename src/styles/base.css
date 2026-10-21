@@ -1,0 +1,192 @@
+/* Page frame, form controls and the few primitives shared by every view. */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+  scroll-padding-top: env(safe-area-inset-top, 0px);
+}
+
+body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: var(--bg);
+  background-image: radial-gradient(circle, var(--dot) 0.55px, transparent 0.95px);
+  background-size: 12px 12px;
+  background-position: 6px 6px;
+  color: var(--ink);
+  font: 15px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+@supports (height: 100dvh) {
+  html,
+  body {
+    height: 100dvh;
+  }
+}
+
+/* The app owns the viewport: the header is fixed height and the two columns
+   scroll independently. The React root has to carry the height through. */
+#root {
+  height: 100%;
+}
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 20px 16px 16px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 285px 1fr;
+  grid-template-rows: minmax(0, 1fr);
+  gap: 14px;
+  flex: 1;
+  min-height: 0;
+  align-items: stretch;
+}
+
+.panel {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 16px;
+  min-width: 0;
+}
+
+.col {
+  min-width: 0;
+  min-height: 0;
+  overflow: auto;
+  padding: 16px 2px 0 0;
+}
+
+h2 {
+  font-size: 18px;
+  margin: 0 0 12px;
+}
+
+.sub {
+  color: var(--mute);
+  font-size: 13px;
+}
+
+.row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+input,
+textarea,
+button {
+  font: inherit;
+  color: inherit;
+}
+
+input,
+textarea {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 8px 10px;
+  min-width: 0;
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--focus);
+  box-shadow: none;
+}
+
+button {
+  cursor: pointer;
+  border: 1px solid var(--line);
+  background: var(--card);
+  border-radius: 8px;
+  padding: 7px 12px;
+}
+
+button:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+/* Primary actions are painted with the highlighter. */
+button.pri {
+  background: var(--pf);
+  border-color: transparent;
+  color: var(--pi);
+}
+
+button.pri:hover {
+  background: color-mix(in srgb, var(--pf) 88%, var(--accent));
+}
+
+/* A quiet icon button that turns red on hover. */
+.x {
+  border: none;
+  background: none;
+  color: var(--mute);
+  padding: 4px 8px;
+}
+
+.x:hover {
+  color: var(--danger);
+}
+
+.dv {
+  height: 1px;
+  background: var(--line);
+  margin: 8px 4px;
+}
+
+.empty {
+  color: var(--mute);
+  padding: 12px 0;
+  font-size: 14px;
+}
+
+/* Tag chip, used for projects, people, @mentions and deadlines. */
+.tg {
+  font-size: 12px;
+  line-height: 1.4;
+  border: none;
+  border-radius: 6px;
+  padding: 2px 8px;
+  background: color-mix(in srgb, var(--mute) 8%, var(--card));
+  color: color-mix(in srgb, var(--ink) 58%, var(--card));
+}
+
+/* Search match. */
+mark.hl {
+  background: var(--pf);
+  color: var(--pi);
+  border-radius: 3px;
+  padding: 0 1px;
+  margin: 0 -1px;
+}
+
+@media (max-width: 560px) {
+  .wrap {
+    padding: 12px 10px 10px;
+  }
+
+  .grid {
+    grid-template-columns: 156px 1fr;
+    gap: 8px;
+  }
+
+  .panel {
+    padding: 12px;
+  }
+}
