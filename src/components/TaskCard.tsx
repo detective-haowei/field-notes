@@ -9,6 +9,7 @@ import { useView } from "../store/ViewContext";
 import { AddUpdate } from "./AddUpdate";
 import { DatePicker } from "./DatePicker";
 import { DeadlineChip } from "./DeadlineChip";
+import { ChevronDownIcon } from "./icons";
 import { TaskEditor } from "./TaskEditor";
 import { Updates } from "./Updates";
 
@@ -16,9 +17,12 @@ interface Props {
   task: Task;
   collapsed: boolean;
   onToggleCollapsed: () => void;
+  /** Whether a completed task is opened out rather than folded to its heading. */
+  expanded: boolean;
+  onToggleExpanded: () => void;
 }
 
-export function TaskCard({ task, collapsed, onToggleCollapsed }: Props) {
+export function TaskCard({ task, collapsed, onToggleCollapsed, expanded, onToggleExpanded }: Props) {
   const { saveTask, removeTask } = useStore();
   const { effectiveSelection: selection, todayK, terms } = useView();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -78,6 +82,21 @@ export function TaskCard({ task, collapsed, onToggleCollapsed }: Props) {
     </button>
   );
 
+  const completedBanner = completedOn ? (
+    <div className="fb">
+      <span>{"Task completed · " + label(completedOn)}</span>
+      <button
+        type="button"
+        className={"x kb" + (expanded ? " open" : "")}
+        title={expanded ? "Hide details" : "Show details"}
+        aria-expanded={expanded}
+        onClick={onToggleExpanded}
+      >
+        <ChevronDownIcon />
+      </button>
+    </div>
+  ) : null;
+
   if (isMutedOn(task, selection)) {
     return (
       <div className="note muted" title={task.body}>
@@ -94,11 +113,24 @@ export function TaskCard({ task, collapsed, onToggleCollapsed }: Props) {
     );
   }
 
+  if (finished && !expanded) {
+    return (
+      <div className="note fin folded">
+        {completedBanner}
+        <div className="fh">
+          <div className="t">{renderHighlighted(headingOf(task), terms)}</div>
+          <span className="lw">
+            <span className="bd fin">{"✓ Done · " + count + (count === 1 ? " day" : " days")}</span>
+            <span className="cr">{"Created " + label(start)}</span>
+          </span>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className={"note" + (finished ? " fin" : "")}>
-      {finished && completedOn ? (
-        <div className="fb">{"Task completed · " + label(completedOn)}</div>
-      ) : null}
+      {finished && completedOn ? completedBanner : null}
 
       <div className="hd">
         {changingDate ? (

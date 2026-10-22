@@ -11,11 +11,14 @@ import { TaskCard } from "./TaskCard";
 
 /** Which tasks have their update log folded away; kept across reloads. */
 const COLLAPSED_KEY = "wt-col";
+/** Which completed tasks are opened out; the rest stay folded to a heading. */
+const OPEN_DONE_KEY = "wt-open";
 
 export function TaskColumn() {
   const { tasks } = useStore();
   const { effectiveSelection: selection, filters, filtering, todayK } = useView();
   const { flags: collapsed, toggle: toggleCollapsed } = useLocalFlags(COLLAPSED_KEY);
+  const { flags: openDone, toggle: toggleOpenDone } = useLocalFlags(OPEN_DONE_KEY);
 
   const list = visibleTasks(tasks, selection, filters, todayK);
   const heading = filtering
@@ -44,6 +47,8 @@ export function TaskColumn() {
             task={task}
             collapsed={!!collapsed[task.id]}
             onToggleCollapsed={() => toggleCollapsed(task.id)}
+            expanded={!!openDone[task.id]}
+            onToggleExpanded={() => toggleOpenDone(task.id)}
           />
         ))}
       </div>

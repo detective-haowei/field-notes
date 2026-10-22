@@ -19,7 +19,8 @@
   padding: 10px 16px;
 }
 
-.note.muted .t {
+.note.muted .t,
+.note.folded .t {
   flex: 1;
   min-width: 0;
   overflow: hidden;
@@ -42,6 +43,10 @@
 }
 
 .fb {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
   margin: -16px -16px 0;
   padding: 8px 16px;
   background: color-mix(in srgb, var(--mute) 14%, var(--card));
@@ -50,6 +55,37 @@
   font-weight: 600;
   border-radius: 7px 7px 0 0;
   border-bottom: 1px solid var(--line);
+}
+
+/* The expand / collapse button in the banner. */
+.fb .kb {
+  width: 24px;
+  height: 24px;
+  margin: -4px -6px -4px 0;
+}
+
+.fb .kb svg {
+  transition: transform 0.15s;
+}
+
+.fb .kb:hover {
+  color: var(--ink);
+}
+
+.fb .kb.open svg {
+  transform: rotate(180deg);
+}
+
+/* A completed task folded to its banner and one row: heading, then details. */
+.note.folded {
+  gap: 8px;
+}
+
+.fh {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 12px;
 }
 
 .hd {
