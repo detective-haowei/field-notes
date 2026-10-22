@@ -30,6 +30,8 @@ export interface Task {
   created: number;
   date?: DayKey;
   deadline?: DayKey;
+  /** Days on which the task is folded down to its heading. */
+  mutedDays?: DayKey[];
   /** Only set by older data and by imports. */
   title?: string;
   done?: boolean;

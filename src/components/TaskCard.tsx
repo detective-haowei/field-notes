@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import type { DayKey, Task } from "../types";
 import { label } from "../lib/dates";
 import { renderHighlighted } from "../lib/text";
-import { completeDayFor, dayCount, doneOn, startOf } from "../lib/tasks";
+import { completeDayFor, dayCount, doneOn, headingOf, isMutedOn, startOf } from "../lib/tasks";
 import { useDismiss } from "../hooks/useDismiss";
 import { useStore } from "../store/StoreContext";
 import { useView } from "../store/ViewContext";
@@ -78,6 +78,22 @@ export function TaskCard({ task, collapsed, onToggleCollapsed }: Props) {
     </button>
   );
 
+  if (isMutedOn(task, selection)) {
+    return (
+      <div className="note muted" title={task.body}>
+        <div className="t">{renderHighlighted(headingOf(task), terms)}</div>
+        <span className="cr">Muted today</span>
+        <button
+          type="button"
+          className="chk"
+          onClick={() => saveTask({ ...task, mutedDays: (task.mutedDays || []).filter((d) => d !== selection) })}
+        >
+          Unmute
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div className={"note" + (finished ? " fin" : "")}>
       {finished && completedOn ? (
@@ -146,6 +162,11 @@ export function TaskCard({ task, collapsed, onToggleCollapsed }: Props) {
               {menuItem("Change date", () => setChangingDate(true))}
               {menuItem(task.deadline ? "Change deadline" : "Set deadline", () => setDeadlineOpen(true))}
               {task.deadline ? menuItem("Remove deadline", () => setDeadline("")) : null}
+              {selection === "all"
+                ? null
+                : menuItem("Mute for this day", () =>
+                    saveTask({ ...task, mutedDays: [...(task.mutedDays || []), selection] }),
+                  )}
               {menuItem("Delete", () => removeTask(task.id), "dl")}
             </div>
           ) : null}

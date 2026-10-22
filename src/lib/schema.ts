@@ -13,6 +13,7 @@ const MAX = {
   fileName: 200,
   fileType: 60,
   files: 20,
+  mutedDays: 400,
 };
 
 export function isDayKey(v: unknown): v is string {
@@ -78,6 +79,7 @@ export function cleanTask(raw: unknown): Task | null {
   };
   if (isDayKey(n.date)) out.date = n.date;
   if (isDayKey(n.deadline)) out.deadline = n.deadline;
+  if (Array.isArray(n.mutedDays)) out.mutedDays = n.mutedDays.filter(isDayKey).slice(0, MAX.mutedDays);
   if (typeof n.title === "string" && n.title) out.title = n.title.slice(0, MAX.title);
   if (n.done === true) {
     out.done = true;

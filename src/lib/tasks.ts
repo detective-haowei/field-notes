@@ -24,6 +24,16 @@ export function isActiveOn(t: Task, k: DayKey, todayK: DayKey): boolean {
   return k <= todayK || k === s;
 }
 
+/** Whether a task is folded down to its heading on the selected day. */
+export function isMutedOn(t: Task, sel: Selection): boolean {
+  return sel !== "all" && (t.mutedDays || []).includes(sel);
+}
+
+/** The one-line heading shown for a muted task. */
+export function headingOf(t: Task): string {
+  return (t.title || (t.body || "").split("\n")[0] || "Untitled").trim();
+}
+
 /** How many days a task has been running, as shown on its badge. */
 export function dayCount(t: Task, upTo: DayKey): number {
   return Math.max(1, dayN(startOf(t), upTo) + 1);

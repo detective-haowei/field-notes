@@ -11,6 +11,28 @@
   border-radius: 8px;
 }
 
+/* A task muted for the day folds to one row: heading, label, Unmute. */
+.note.muted {
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+}
+
+.note.muted .t {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 500;
+  color: var(--mute);
+}
+
+.note.muted .cr {
+  white-space: nowrap;
+}
+
 /* Completed tasks keep their banner at full strength and fade the rest. */
 .note.fin .cb,
 .note.fin .ups,
