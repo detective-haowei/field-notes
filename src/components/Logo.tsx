@@ -2,7 +2,7 @@
  * The wordmark: a 14x14 grid of dots whose radii trace the letters, so the
  * mark scales with the type instead of being an image.
  */
-const DOT_RADII: number[][] = [
+export const DOT_RADII: number[][] = [
   [0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12],
   [0.12, 0.67, 0.59, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12],
   [0.12, 0.27, 0.32, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12],
