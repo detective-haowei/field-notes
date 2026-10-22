@@ -27,6 +27,7 @@
   flex: 1;
   width: 100%;
   min-height: 56px;
+  transition: min-height 0.15s;
   padding: 6px 8px;
   border: 0;
   outline: 0;
@@ -36,6 +37,16 @@
   line-height: 1.4;
   resize: none;
   overflow: hidden;
+}
+
+/* Compact until clicked: one line, no toolbar. It opens while focused, while
+   a file is dragged over it, and while it holds text or staged files. */
+.addup:not(:focus-within):not(.filled):not(.drop) .atb {
+  display: none;
+}
+
+.note .addup:not(:focus-within):not(.filled):not(.drop) textarea {
+  min-height: 0;
 }
 
 /* Toolbar under the field: attach on the left, send on the right. */

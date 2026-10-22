@@ -52,7 +52,10 @@ export function AddUpdate({ task }: { task: Task }) {
 
   return (
     <div
-      className={"addup" + (dropping ? " drop" : "")}
+      className={"addup" + (dropping ? " drop" : "") + (text || items.length ? " filled" : "")}
+      onClick={(e) => {
+        if (e.target === e.currentTarget) textRef.current?.focus();
+      }}
       onDragOver={
         assets
           ? (e) => {
