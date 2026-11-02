@@ -419,6 +419,11 @@
   min-height: 32px;
 }
 
+/* The buttons on the right: Mute, then Complete or Reopen. */
+.meta > span:last-child {
+  gap: 8px;
+}
+
 .lw {
   display: inline-flex;
   align-items: center;

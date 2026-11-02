@@ -194,11 +194,6 @@ export function TaskCard({ task, collapsed, onToggleCollapsed, expanded, onToggl
               {menuItem("Change date", () => setChangingDate(true))}
               {menuItem(task.deadline ? "Change deadline" : "Set deadline", () => setDeadlineOpen(true))}
               {task.deadline ? menuItem("Remove deadline", () => setDeadline("")) : null}
-              {selection === "all"
-                ? null
-                : menuItem("Mute for this day", () =>
-                    saveTask({ ...task, mutedDays: [...(task.mutedDays || []), selection] }),
-                  )}
               {menuItem("Delete", () => removeTask(task.id), "dl")}
             </div>
           ) : null}
@@ -224,6 +219,16 @@ export function TaskCard({ task, collapsed, onToggleCollapsed, expanded, onToggl
           <span className="cr">{"Created " + label(start)}</span>
         </span>
         <span>
+          {selection === "all" ? null : (
+            <button
+              type="button"
+              className="chk"
+              title="Fold this task to its heading for this day"
+              onClick={() => saveTask({ ...task, mutedDays: [...(task.mutedDays || []), selection] })}
+            >
+              Mute
+            </button>
+          )}
           {!completedOn ? (
             <button
               type="button"
