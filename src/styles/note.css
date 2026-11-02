@@ -34,13 +34,16 @@
   white-space: nowrap;
 }
 
-/* A task handed to dev uses the muted row and wraps on narrow screens. */
-.note.muted.dev {
-  flex-wrap: wrap;
+/* A task handed to dev wears the completed look. Its buttons sit in the
+   folded row and stay at full strength. */
+.note.dev .fb span:last-child {
+  color: var(--ink);
 }
 
-.note.muted.dev .t {
-  flex-basis: 140px;
+.note.dev .acts {
+  display: inline-flex;
+  gap: 8px;
+  margin-left: auto;
 }
 
 /* Complete with a drop-down arrow joined to it. */

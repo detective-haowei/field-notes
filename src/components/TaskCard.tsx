@@ -113,29 +113,36 @@ export function TaskCard({ task, collapsed, onToggleCollapsed, expanded, onToggl
   const complete = () => saveTask({ ...task, done: true, doneDate: completeDayFor(task, selection, todayK) });
   const sendToDev = () => saveTask({ ...task, sentToDev: updateDayFor(task, selection, todayK) });
 
-  // Handed to dev: folded to one row that counts the days until it is completed.
+  // Handed to dev: looks like a finished task (grey bar, folded) but carries
+  // on to the next day, counting days, until it is completed.
   if (task.sentToDev && !completedOn && isInDevOn(task, selection)) {
     const days = devDays(task, selection === "all" ? todayK : selection);
     return (
-      <div className="note muted dev" title={task.body}>
-        <div className="t">{renderHighlighted(headingOf(task), terms)}</div>
-        <span className="cr">{"Sent to dev " + label(task.sentToDev)}</span>
-        <span className="bd">{days + (days === 1 ? " day" : " days") + " in dev"}</span>
-        <button
-          type="button"
-          className="chk"
-          title="Bring this task back from dev"
-          onClick={() => {
-            const next = { ...task };
-            delete next.sentToDev;
-            saveTask(next);
-          }}
-        >
-          Undo
-        </button>
-        <button type="button" className="chk" onClick={complete}>
-          {"✓ Complete"}
-        </button>
+      <div className="note fin folded dev" title={task.body}>
+        <div className="fb">
+          <span>{"Sent to dev · " + label(task.sentToDev)}</span>
+          <span>{days + (days === 1 ? " day" : " days") + " in dev"}</span>
+        </div>
+        <div className="fh">
+          <div className="t">{renderHighlighted(headingOf(task), terms)}</div>
+          <span className="acts">
+            <button
+              type="button"
+              className="chk"
+              title="Bring this task back from dev"
+              onClick={() => {
+                const next = { ...task };
+                delete next.sentToDev;
+                saveTask(next);
+              }}
+            >
+              Undo
+            </button>
+            <button type="button" className="chk" onClick={complete}>
+              {"✓ Complete"}
+            </button>
+          </span>
+        </div>
       </div>
     );
   }
