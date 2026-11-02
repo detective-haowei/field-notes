@@ -24,6 +24,16 @@ export function isActiveOn(t: Task, k: DayKey, todayK: DayKey): boolean {
   return k <= todayK || k === s;
 }
 
+/** Whether a task has been handed to dev as of the selected day. */
+export function isInDevOn(t: Task, sel: Selection): boolean {
+  return !!t.sentToDev && (sel === "all" || t.sentToDev <= sel);
+}
+
+/** Days a task has been with dev, counting the day it was sent as day one. */
+export function devDays(t: Task, upTo: DayKey): number {
+  return t.sentToDev ? Math.max(1, dayN(t.sentToDev, upTo) + 1) : 0;
+}
+
 /** Whether a task is folded down to its heading on the selected day. */
 export function isMutedOn(t: Task, sel: Selection): boolean {
   return sel !== "all" && (t.mutedDays || []).includes(sel);

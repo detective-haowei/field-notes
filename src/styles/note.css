@@ -34,6 +34,40 @@
   white-space: nowrap;
 }
 
+/* A task handed to dev uses the muted row and wraps on narrow screens. */
+.note.muted.dev {
+  flex-wrap: wrap;
+}
+
+.note.muted.dev .t {
+  flex-basis: 140px;
+}
+
+/* Complete with a drop-down arrow joined to it. */
+.split {
+  display: inline-flex;
+}
+
+.split .chk:first-child {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.split .caret {
+  display: grid;
+  place-items: center;
+  padding: 3px 7px;
+  border-left: 0;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+/* Footer menus open upward so they stay inside the card and the page. */
+.mn.up {
+  top: auto;
+  bottom: calc(100% + 4px);
+}
+
 /* Completed tasks keep their banner at full strength and fade the rest. */
 .note.fin .cb,
 .note.fin .ups,

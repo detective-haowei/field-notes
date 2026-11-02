@@ -2,7 +2,17 @@ import { useEffect, useRef, useState } from "react";
 import type { DayKey, Task } from "../types";
 import { label } from "../lib/dates";
 import { renderHighlighted } from "../lib/text";
-import { completeDayFor, dayCount, doneOn, headingOf, isMutedOn, startOf } from "../lib/tasks";
+import {
+  completeDayFor,
+  dayCount,
+  devDays,
+  doneOn,
+  headingOf,
+  isInDevOn,
+  isMutedOn,
+  startOf,
+  updateDayFor,
+} from "../lib/tasks";
 import { useDismiss } from "../hooks/useDismiss";
 import { useStore } from "../store/StoreContext";
 import { useView } from "../store/ViewContext";
@@ -29,12 +39,15 @@ export function TaskCard({ task, collapsed, onToggleCollapsed, expanded, onToggl
   const [editing, setEditing] = useState(false);
   const [changingDate, setChangingDate] = useState(false);
   const [deadlineOpen, setDeadlineOpen] = useState(false);
+  const [doneMenuOpen, setDoneMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const doneMenuRef = useRef<HTMLDivElement>(null);
   const kebabRef = useRef<HTMLButtonElement>(null);
   const chipRef = useRef<HTMLDivElement>(null);
   const dateRef = useRef<HTMLInputElement>(null);
 
   useDismiss(menuOpen, () => setMenuOpen(false), [menuRef]);
+  useDismiss(doneMenuOpen, () => setDoneMenuOpen(false), [doneMenuRef]);
 
   const start = startOf(task);
   const completedOn = doneOn(task);
@@ -97,6 +110,36 @@ export function TaskCard({ task, collapsed, onToggleCollapsed, expanded, onToggl
     </div>
   ) : null;
 
+  const complete = () => saveTask({ ...task, done: true, doneDate: completeDayFor(task, selection, todayK) });
+  const sendToDev = () => saveTask({ ...task, sentToDev: updateDayFor(task, selection, todayK) });
+
+  // Handed to dev: folded to one row that counts the days until it is completed.
+  if (task.sentToDev && !completedOn && isInDevOn(task, selection)) {
+    const days = devDays(task, selection === "all" ? todayK : selection);
+    return (
+      <div className="note muted dev" title={task.body}>
+        <div className="t">{renderHighlighted(headingOf(task), terms)}</div>
+        <span className="cr">{"Sent to dev " + label(task.sentToDev)}</span>
+        <span className="bd">{days + (days === 1 ? " day" : " days") + " in dev"}</span>
+        <button
+          type="button"
+          className="chk"
+          title="Bring this task back from dev"
+          onClick={() => {
+            const next = { ...task };
+            delete next.sentToDev;
+            saveTask(next);
+          }}
+        >
+          Undo
+        </button>
+        <button type="button" className="chk" onClick={complete}>
+          {"✓ Complete"}
+        </button>
+      </div>
+    );
+  }
+
   if (isMutedOn(task, selection)) {
     return (
       <div className="note muted" title={task.body}>
@@ -122,6 +165,7 @@ export function TaskCard({ task, collapsed, onToggleCollapsed, expanded, onToggl
           <span className="lw">
             <span className="bd fin">{"✓ Done · " + count + (count === 1 ? " day" : " days")}</span>
             <span className="cr">{"Created " + label(start)}</span>
+            {task.sentToDev ? <span className="cr">{"Sent to dev " + label(task.sentToDev)}</span> : null}
           </span>
         </div>
       </div>
@@ -230,15 +274,44 @@ export function TaskCard({ task, collapsed, onToggleCollapsed, expanded, onToggl
             </button>
           )}
           {!completedOn ? (
-            <button
-              type="button"
-              className="chk"
-              onClick={() =>
-                saveTask({ ...task, done: true, doneDate: completeDayFor(task, selection, todayK) })
-              }
-            >
-              {"✓ Complete"}
-            </button>
+            <span className="split mw" ref={doneMenuRef}>
+              <button type="button" className="chk" onClick={complete}>
+                {"✓ Complete"}
+              </button>
+              <button
+                type="button"
+                className="chk caret"
+                title="More ways to finish"
+                aria-label="More ways to finish"
+                aria-haspopup="menu"
+                aria-expanded={doneMenuOpen}
+                onClick={() => setDoneMenuOpen((o) => !o)}
+              >
+                <ChevronDownIcon />
+              </button>
+              {doneMenuOpen ? (
+                <div className="mn up">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setDoneMenuOpen(false);
+                      complete();
+                    }}
+                  >
+                    Complete
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setDoneMenuOpen(false);
+                      sendToDev();
+                    }}
+                  >
+                    Sent to dev
+                  </button>
+                </div>
+              ) : null}
+            </span>
           ) : selection === "all" || selection === completedOn ? (
             <button
               type="button"
