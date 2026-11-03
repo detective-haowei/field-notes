@@ -144,8 +144,7 @@ export function DayNav({ onWeekSummary }: Props) {
             className={"day all" + (selection === "all" ? " on" : "")}
             onClick={() => select("all")}
           >
-            <span>All Tasks</span>
-            <span className="n">{tasks.length}</span>
+            <span>Dashboard</span>
           </button>
         </div>
         <div className="dv" />

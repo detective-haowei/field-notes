@@ -5,6 +5,7 @@ import { useLocalFlags } from "../hooks/useLocalFlags";
 import { useStore } from "../store/StoreContext";
 import { useView } from "../store/ViewContext";
 import { Compose } from "./Compose";
+import { Dashboard } from "./Dashboard";
 import { DayStatus } from "./DayStatus";
 import { FilterButton } from "./FilterButton";
 import { TaskCard } from "./TaskCard";
@@ -21,10 +22,12 @@ export function TaskColumn() {
   const { flags: openDone, toggle: toggleOpenDone } = useLocalFlags(OPEN_DONE_KEY);
 
   const list = visibleTasks(tasks, selection, filters, todayK);
+  // With no search or filter on, the all-days view is the dashboard.
+  const dashboard = selection === "all" && !filtering;
   const heading = filtering
     ? "Search results · " + list.length
     : selection === "all"
-      ? "All Tasks"
+      ? "Dashboard"
       : longLabel(selection);
   const holiday = selection === "all" ? "" : holidayName(selection);
 
@@ -37,11 +40,11 @@ export function TaskColumn() {
         {selection === "all" ? <FilterButton /> : null}
       </div>
 
-      <Compose />
+      {dashboard ? <Dashboard /> : <Compose />}
 
       <div className="notes">
         {filtering && !list.length ? <div className="empty">No matching tasks.</div> : null}
-        {list.map((task) => (
+        {(dashboard ? [] : list).map((task) => (
           <TaskCard
             key={task.id}
             task={task}
